@@ -14,6 +14,22 @@ mvn clean package
 
 ## Run it!
 
+### OpenJDK Panama Part 1
+```shell
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.openjdk.samples.panama.part_1.PrintfSimplified
+```
+
+### OpenJDK Panama Part 2
+
+```shell
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.openjdk.samples.panama.part_2.MethodTypeExample
+```
+
+```shell
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.openjdk.samples.panama.part_2.PrintfVariadic
+```
+
+
 ### stdlib: stdio
 
 ```shell
