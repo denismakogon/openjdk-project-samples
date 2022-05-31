@@ -17,7 +17,7 @@ mvn clean package
 ### stdlib: stdio
 
 ```shell
-java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.openjdk.samples.panama.stdlib.Printf
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.openjdk.samples.panama.part_3.Printf
 ```
 
 ### ffmpeg

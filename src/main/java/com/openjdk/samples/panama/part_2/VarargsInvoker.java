@@ -1,4 +1,4 @@
-package com.openjdk.samples.panama.stdlib;
+package com.openjdk.samples.panama.part_2;
 
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
