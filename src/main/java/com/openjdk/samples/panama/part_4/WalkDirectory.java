@@ -1,4 +1,4 @@
-package com.openjdk.samples.panama.stdlib;
+package com.openjdk.samples.panama.part_4;
 
 import com.openjdk.samples.stdlib.dirent.*;
 import com.openjdk.samples.stdlib.string.*;

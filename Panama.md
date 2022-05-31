@@ -29,19 +29,14 @@ java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samp
 java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.openjdk.samples.panama.part_2.PrintfVariadic
 ```
 
-
-### stdlib: stdio
+### OpenJDK Panama Part 3
 
 ```shell
 java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.openjdk.samples.panama.part_3.Printf
 ```
 
-### ffmpeg
+### OpenJDK Panama Part 4
 
 ```shell
-java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.openjdk.samples.panama.ffmpeg.Versions
-```
-
-```shell
-java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.openjdk.samples.panama.ffmpeg.FilesWalk`
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.openjdk.samples.panama.part_4.WalkDirectory
 ```
