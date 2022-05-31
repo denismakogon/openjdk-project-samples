@@ -1,0 +1,10 @@
+Dockerfile.server
+README.md
+TODO.md
+Panama.md
+target/
+venv/
+.idea
+docs/
+samples/
+.git/
