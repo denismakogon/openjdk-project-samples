@@ -1,4 +1,4 @@
-package com.openjdk.samples.panama.jextract_jar_jmod;
+package com.openjdk.samples.panama.third_party.jextract_jar_jmod;
 
 import java.io.File;
 import java.io.IOException;

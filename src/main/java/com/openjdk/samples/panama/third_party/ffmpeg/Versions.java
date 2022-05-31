@@ -1,4 +1,4 @@
-package com.openjdk.samples.panama.ffmpeg;
+package com.openjdk.samples.panama.third_party.ffmpeg;
 
 import static com.openjdk.samples.ffmpeg.libavformat.version.version_h.*;
 import static com.openjdk.samples.ffmpeg.libavcoded.version.version_h.*;

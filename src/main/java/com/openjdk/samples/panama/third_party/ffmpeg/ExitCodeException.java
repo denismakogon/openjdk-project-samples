@@ -1,4 +1,4 @@
-package com.openjdk.samples.panama.ffmpeg;
+package com.openjdk.samples.panama.third_party.ffmpeg;
 
 import com.openjdk.samples.ffmpeg.libavutil.error.error_h;
 
