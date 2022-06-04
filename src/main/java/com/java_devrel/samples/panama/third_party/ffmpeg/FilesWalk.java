@@ -1,18 +1,18 @@
-package com.openjdk.samples.panama.third_party.ffmpeg;
+package com.java_devrel.samples.panama.third_party.ffmpeg;
 
-import com.openjdk.samples.ffmpeg.libavformat.avio.AVIODirEntry;
-import com.openjdk.samples.ffmpeg.libavformat.avio.avio_h;
-import com.openjdk.samples.ffmpeg.libavformat.avformat.avformat_h;
+import com.java_devrel.samples.ffmpeg.libavformat.avio.AVIODirEntry;
+import com.java_devrel.samples.ffmpeg.libavformat.avio.avio_h;
+import com.java_devrel.samples.ffmpeg.libavformat.avformat.avformat_h;
 
-import com.openjdk.samples.stdlib.grp.group;
-import com.openjdk.samples.stdlib.grp.grp_h;
-import com.openjdk.samples.stdlib.pwd.passwd;
-import com.openjdk.samples.stdlib.pwd.pwd_h;
+import com.java_devrel.samples.stdlib.grp.group;
+import com.java_devrel.samples.stdlib.grp.grp_h;
+import com.java_devrel.samples.stdlib.pwd.passwd;
+import com.java_devrel.samples.stdlib.pwd.pwd_h;
 import java.lang.foreign.*;
 
 import java.util.Map;
 
-import static com.openjdk.samples.ffmpeg.libavformat.avformat.avformat_h.C_POINTER;
+import static com.java_devrel.samples.ffmpeg.libavformat.avformat.avformat_h.C_POINTER;
 
 
 public class FilesWalk {

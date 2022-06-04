@@ -3,7 +3,7 @@
 set -ex
 
 
-apt-get install -yq --no-install-recommends \
+apt-get update && apt-get install -yq --no-install-recommends \
     linux-libc-dev \
     libstdc++-10-dev \
     libmfx-dev \

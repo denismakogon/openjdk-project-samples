@@ -1,10 +1,10 @@
-package com.openjdk.samples.panama.part_3;
+package com.java_devrel.samples.panama.part_3;
 
 
 import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
 
-import static com.openjdk.samples.stdlib.stdio.stdio_h.printf;
+import static com.java_devrel.samples.stdlib.stdio.stdio_h.printf;
 
 
 public class Printf {

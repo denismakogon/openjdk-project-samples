@@ -1,6 +1,6 @@
-package com.openjdk.samples.panama.third_party.ffmpeg;
+package com.java_devrel.samples.panama.third_party.ffmpeg;
 
-import com.openjdk.samples.ffmpeg.libavutil.error.error_h;
+import com.java_devrel.samples.ffmpeg.libavutil.error.error_h;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;

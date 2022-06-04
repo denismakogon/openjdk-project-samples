@@ -5,7 +5,7 @@ set -xe
 stdlib_partial=${1:-"stdio"}
 
 
-package="$(echo "com.openjdk.samples.stdlib.${stdlib_partial}" | tr '/' '.')"
+package="$(echo "com.java_devrel.samples.stdlib.${stdlib_partial}" | tr '/' '.')"
 package_dir="src/main/java/$(echo "${package}" | tr '.' '/')"
 include_path="/usr/include"
 

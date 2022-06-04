@@ -1,4 +1,4 @@
-package com.openjdk.samples.panama.part_2;
+package com.java_devrel.samples.panama.part_2;
 
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
@@ -8,7 +8,7 @@ import static java.lang.foreign.ValueLayout.ADDRESS;
 import static java.lang.foreign.ValueLayout.JAVA_INT;
 
 
-public class PrintfVariadic {
+public class PrintfUnpredictableVariadic {
     private static final Linker linker = Linker.nativeLinker();
     private static final SymbolLookup linkerLookup = linker.defaultLookup();
     private static final SymbolLookup systemLookup = SymbolLookup.loaderLookup();

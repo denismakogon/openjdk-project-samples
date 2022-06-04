@@ -2,7 +2,7 @@
 
 set -xe
 
-package="com.openjdk.samples.ffmpeg"
+package="com.java_devrel.samples.ffmpeg"
 package_dir="src/main/java/$(echo ${package} | tr '.' '/')"
 include_path="/usr/local/include"
 

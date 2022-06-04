@@ -16,27 +16,32 @@ mvn clean package
 
 ### OpenJDK Panama Part 1
 ```shell
-java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.openjdk.samples.panama.part_1.PrintfSimplified
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar PrintfSimplified
 ```
 
 ### OpenJDK Panama Part 2
 
 ```shell
-java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.openjdk.samples.panama.part_2.MethodTypeExample
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar PrintfDefinedVariadic
+```
+
+
+```shell
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar MethodTypeExample
 ```
 
 ```shell
-java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.openjdk.samples.panama.part_2.PrintfVariadic
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar PrintfUnpredictableVariadic
 ```
 
 ### OpenJDK Panama Part 3
 
 ```shell
-java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.openjdk.samples.panama.part_3.Printf
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar Printf
 ```
 
 ### OpenJDK Panama Part 4
 
 ```shell
-java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.openjdk.samples.panama.part_4.WalkDirectory
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar WalkDirectory
 ```

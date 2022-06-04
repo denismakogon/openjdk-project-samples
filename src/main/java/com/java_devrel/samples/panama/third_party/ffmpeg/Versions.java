@@ -1,7 +1,7 @@
-package com.openjdk.samples.panama.third_party.ffmpeg;
+package com.java_devrel.samples.panama.third_party.ffmpeg;
 
-import static com.openjdk.samples.ffmpeg.libavformat.version.version_h.*;
-import static com.openjdk.samples.ffmpeg.libavcoded.version.version_h.*;
+import static com.java_devrel.samples.ffmpeg.libavformat.version.version_h.*;
+import static com.java_devrel.samples.ffmpeg.libavcoded.version.version_h.*;
 
 public class Versions {
 

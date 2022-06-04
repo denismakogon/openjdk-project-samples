@@ -147,10 +147,19 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
-                    <excludes>
-                        <exclude>**/loom/*.java</exclude>
-                        <exclude>**/etc/*.java</exclude>
-                    </excludes>
+                    <includes>
+                        <!--Panama examples-->
+                        <include>**/panama/part_1/*.java</include>
+                        <include>**/panama/part_2/*.java</include>
+                        <include>**/panama/part_3/*.java</include>
+                        <include>**/panama/part_4/*.java</include>
+                        <!--Generated sources-->
+                        <include>**/stdlib/dirent/*.java</include>
+                        <include>**/stdlib/grp/*.java</include>
+                        <include>**/stdlib/pwd/*.java</include>
+                        <include>**/stdlib/stdio/*.java</include>
+                        <include>**/stdlib/string/*.java</include>
+                    </includes>
                     <compilerArgs>
                         <arg>--enable-preview</arg>
                     </compilerArgs>

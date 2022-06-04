@@ -6,5 +6,5 @@ target/
 venv/
 .idea
 docs/
-samples/
+src/main/java/com/java_devrel/samples/
 .git/
