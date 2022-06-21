@@ -6,6 +6,7 @@ target
 samples/index.json
 src/main/java/com/java_devrel/samples/stdlib
 src/main/java/com/java_devrel/samples/ffmpeg/
+src/main/java/com/java_devrel/samples/opencv/
 out/
 *.class
 
@@ -31,3 +32,7 @@ out/
 hs_err_pid*
 replay_pid*
 META-INF
+*.out
+*.dylib
+*c_api.xcodeproj*
+*yolov3*

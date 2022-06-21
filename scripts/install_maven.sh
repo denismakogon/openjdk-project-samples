@@ -2,7 +2,7 @@
 
 set -ex
 
-MAVEN_VERSION=${MAVEN_VERSION:-"3.8.5"}
+MAVEN_VERSION=${MAVEN_VERSION:-"3.8.6"}
 BASE_URL="https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries"
 MAVEN_BINARY_URL=${BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz
 MAVEN_BINARY_SHA512_URL=${MAVEN_BINARY_URL}.sha512
