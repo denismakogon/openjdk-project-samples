@@ -15,14 +15,14 @@
 using namespace std;
 
 int imageToMatrix(string imagePath, int option, ExportableMat& exMat);
-void runClassificationsOnImage(string classifierPath, string imagePath, PositionalFrameObjectDetectionDescriptor& pds);
+int runClassificationsOnImage(string classifierPath, string imagePath, PositionalFrameObjectDetectionDescriptor& pds);
 int processVideoFile(string classifierPath, string videoFilePath, ExportableRectanglesPerFrame& exportableResult);
-void runDetectionsOnVideo(string videoFilePath, string modelPath, string modelWeights);
-void runDetectionsOnImage(string imagePath, string modelPath, string modelWeights, PositionalFrameObjectDetectionDescriptor& pds);
+int runDetectionsOnVideo(string videoFilePath, string modelPath, string modelWeights);
+int runDetectionsOnImage(string imagePath, string modelPath, string modelWeights, PositionalFrameObjectDetectionDescriptor& pds);
 
 string toString(PositionalFrameObjectDetectionDescriptor& object);
 
-bool drawDetectionsOnImage(string sourceImagePath, string finalImagePath, PositionalFrameObjectDetectionDescriptor& pds, double scale = 1.2);
+int drawDetectionsOnImage(string sourceImagePath, string finalImagePath, PositionalFrameObjectDetectionDescriptor& pds, double scale = 1.2);
 
 
 #endif /* cpp_api_hpp */

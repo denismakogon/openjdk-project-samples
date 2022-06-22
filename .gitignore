@@ -36,3 +36,4 @@ META-INF
 *.dylib
 *c_api.xcodeproj*
 *yolov3*
+*final.jpeg*

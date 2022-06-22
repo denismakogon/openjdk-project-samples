@@ -20,12 +20,12 @@ struct ExportableRectangle {
 
 struct ExportableRectangles {
     struct ExportableRectangle *array;
-    int size;
+    unsigned long size;
 };
 
 struct ExportableRectanglesPerFrame {
     struct ExportableRectangles *array;
-    int size;
+    unsigned long size;
 };
 
 struct ObjectDetectionDescriptor {
@@ -36,7 +36,7 @@ struct ObjectDetectionDescriptor {
 
 struct PositionalFrameObjectDetectionDescriptor {
     int position;
-    int size;
+    unsigned long size;
     struct ObjectDetectionDescriptor* detections;
 };
 

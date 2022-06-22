@@ -63,12 +63,13 @@ const char* ExportableRectangle_toString(struct ExportableRectangle *object);
 const char* ObjectDetectionDescriptor_toString(struct ObjectDetectionDescriptor *object);
 const char * PositionalFrameObjectDetectionDescriptor_toString(struct PositionalFrameObjectDetectionDescriptor* object);
 int imageToMatrix(const char* imagePath, int option, struct ExportableMat *exMat);
-void runClassificationsOnImage(const char* classifierPath, const char* imagePath, struct PositionalFrameObjectDetectionDescriptor *pds);
+int runClassificationsOnImage(const char* classifierPath, const char* imagePath, struct PositionalFrameObjectDetectionDescriptor *pds);
 int processVideoFile(const char* classifierPath, const char* videoFilePath, struct ExportableRectanglesPerFrame* exportableResult);
-void runDetectionsOnImage(const char* imagePath, const char* modelPath, const char* modelWeights,
-                          struct PositionalFrameObjectDetectionDescriptor* pds);
-void runDetectionsOnVideo(const char* videoFilePath, const char* modelPath, const char* modelWeights);
-bool drawDetectionsOnImage(const char* sourceImagePath, const char* finalImagePath, struct PositionalFrameObjectDetectionDescriptor *pds, double scale);
+int runDetectionsOnImage(const char* imagePath, const char* modelPath, const char* modelWeights,
+                         struct PositionalFrameObjectDetectionDescriptor* pds,
+                         double confidenceThreshold);
+int runDetectionsOnVideo(const char* videoFilePath, const char* modelPath, const char* modelWeights);
+int drawDetectionsOnImage(const char* sourceImagePath, const char* finalImagePath, struct PositionalFrameObjectDetectionDescriptor *pds, double scale);
 
 #ifdef __cplusplus
 }
