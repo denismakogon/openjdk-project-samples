@@ -3,9 +3,6 @@ package com.java_devrel.samples.panama.part_4;
 import com.java_devrel.samples.stdlib.dirent.dirent;
 import com.java_devrel.samples.stdlib.dirent.dirent_h;
 import com.java_devrel.samples.stdlib.string.string_h;
-import com.openjdk.samples.stdlib.dirent.*;
-import com.openjdk.samples.stdlib.string.*;
-
 
 import java.io.IOException;
 import java.lang.foreign.MemoryAddress;

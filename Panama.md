@@ -16,32 +16,49 @@ mvn clean package
 
 ### OpenJDK Panama Part 1
 ```shell
-java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar PrintfSimplified
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.java_devrel.samples.panama.part_1.PrintfSimplified
 ```
 
 ### OpenJDK Panama Part 2
 
 ```shell
-java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar PrintfDefinedVariadic
-```
-
-
-```shell
-java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar MethodTypeExample
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.java_devrel.samples.panama.part_2.FunctionDescriptorToMethodType
 ```
 
 ```shell
-java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar PrintfUnpredictableVariadic
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.java_devrel.samples.panama.part_2.PrintfDefinedVariadic
+```
+
+```shell
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.java_devrel.samples.panama.part_2.MethodTypeExample
+```
+
+```shell
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.java_devrel.samples.panama.part_2.PrintfUnpredictableVariadic
 ```
 
 ### OpenJDK Panama Part 3
 
 ```shell
-java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar Printf
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.java_devrel.samples.panama.part_3.Printf
 ```
 
 ### OpenJDK Panama Part 4
 
 ```shell
-java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar WalkDirectory
+java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar com.java_devrel.samples.panama.part_4.WalkDirectory
+```
+
+### OpenJDK Panama Part 5
+
+```shell
+java -Djava.library.path="${PWD}:/usr/local/lib" \
+  --enable-native-access=ALL-UNNAMED \
+  --enable-preview -cp target/openjdk-samples-1.0.jar \
+  com.java_devrel.samples.panama.part_5.Main
+  
+  
+java --enable-native-access=ALL-UNNAMED \
+  --enable-preview -cp target/openjdk-samples-1.0.jar \
+  com.java_devrel.samples.panama.part_5.Main
 ```
