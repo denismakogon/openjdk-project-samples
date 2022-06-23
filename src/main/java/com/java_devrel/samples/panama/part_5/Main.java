@@ -41,6 +41,8 @@ public class Main {
                 if (retCode != 0 ) {
                     System.exit(retCode);
                 }
+
+                System.out.println(c_api_h.PositionalFrameObjectDetectionDescriptor_toString(pds$ms).getUtf8String(0));
                 c_api_h.drawDetectionsOnImage(source, target, pds$ms, 1.2);
             });
         }

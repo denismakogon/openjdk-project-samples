@@ -61,6 +61,12 @@ bool checkElementByIndexAt(vector<string>& vt, int index) {
     return isPresent;
 }
 
+const char* stringToChar(string str) {
+    const char* charPtrClassName = new char[str.length()];
+    charPtrClassName = str.data();
+    return charPtrClassName;
+}
+
 /*-----------------------------------------------------------------------*/
 /*---------------------------------DEBUG---------------------------------*/
 /*-----------------------------------------------------------------------*/
@@ -83,13 +89,12 @@ string toString(ExportableRectangle& object) {
 }
 
 string toString(ObjectDetectionDescriptor& object) {
-    int classId = object.classId;
-    float confidence = object.confidence;
-    return format("class ID: %d, confidence: %f, rectange: [%s]\n", classId, confidence, toString(object.rect).c_str());
+    return format("confidence: %6.4lf, rectange: [%s] class: %s\n",
+                  object.confidence, toString(object.rect).data(), object.className);
 }
 
 string toString(PositionalFrameObjectDetectionDescriptor& object) {
-    string res = "\n";
+    string res = "";
     for (int i = 0; i < object.size; i++) {
         res += toString(object.detections[i]);
     }
@@ -179,7 +184,7 @@ void exportVectorOf(vector<Rect>& intermediate, PositionalFrameObjectDetectionDe
     vector<ObjectDetectionDescriptor> ds;
     for (auto r: intermediate) {
         ds.push_back((ObjectDetectionDescriptor) {
-                        .classId = 0,
+                        .className = strdup("unknown"),
                         .confidence = 0,
                         .rect = (ExportableRectangle) {
                             .x = r.x, .y = r.y,
@@ -454,7 +459,7 @@ void formatDetections(Mat& frame, vector<Mat>& outs, Net& net, vector<ObjectDete
                 int top = centerY - height / 2;
 
                 ObjectDetectionDescriptor d = (ObjectDetectionDescriptor) {
-                    .classId = classIdPoint.x,
+                    .className = strdup(cocoaClasses[classIdPoint.x].c_str()),
                     .confidence = confidence,
                     .rect = (ExportableRectangle) {
                         .x = left,
@@ -463,6 +468,7 @@ void formatDetections(Mat& frame, vector<Mat>& outs, Net& net, vector<ObjectDete
                         .height = height
                     }
                 };
+                debug(toString(d));
                 ds.push_back(d);
             }
         }
@@ -610,26 +616,17 @@ int drawDetectionsOnImage(string sourceImagePath, string finalImagePath,
 
 extern "C" const char* ExportableRectangle_toString(struct ExportableRectangle *ExportableRectangle);
 const char* ExportableRectangle_toString(struct ExportableRectangle *ExportableRectangle) {
-    string str = toString(*ExportableRectangle);
-    const char* s = new char[str.length()];
-    s = str.data();
-    return s;
+    return stringToChar(toString(*ExportableRectangle));
 }
 
 extern "C" const char* ObjectDetectionDescriptor_toString(struct ObjectDetectionDescriptor *ObjectDetectionDescriptor);
 const char* ObjectDetectionDescriptor_toString(struct ObjectDetectionDescriptor *ObjectDetectionDescriptor) {
-    string str = toString(*ObjectDetectionDescriptor);
-    const char* s = new char[str.length()];
-    s = str.data();
-    return s;
+    return stringToChar(toString(*ObjectDetectionDescriptor));
 }
 
 extern "C" const char * PositionalFrameObjectDetectionDescriptor_toString(struct PositionalFrameObjectDetectionDescriptor* PositionalFrameObjectDetectionDescriptor);
 const char * PositionalFrameObjectDetectionDescriptor_toString(struct PositionalFrameObjectDetectionDescriptor* PositionalFrameObjectDetectionDescriptor) {
-    string str = toString(*PositionalFrameObjectDetectionDescriptor);
-    const char* s = new char[str.length()];
-    s = str.data();
-    return s;
+    return stringToChar(toString(*PositionalFrameObjectDetectionDescriptor));
 }
 
 extern "C" int imageToMatrix(const char* imagePath, int option, struct ExportableMat *exMat);

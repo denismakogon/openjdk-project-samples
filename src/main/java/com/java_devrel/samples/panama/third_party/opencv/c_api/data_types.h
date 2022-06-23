@@ -29,7 +29,7 @@ struct ExportableRectanglesPerFrame {
 };
 
 struct ObjectDetectionDescriptor {
-    int classId;
+    char* className;
     double confidence;
     struct ExportableRectangle rect;
 };
