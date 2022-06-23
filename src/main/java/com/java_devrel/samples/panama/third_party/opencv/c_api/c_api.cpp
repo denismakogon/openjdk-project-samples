@@ -608,65 +608,65 @@ int drawDetectionsOnImage(string sourceImagePath, string finalImagePath,
 /*---------------------------C API collection----------------------------*/
 /*-----------------------------------------------------------------------*/
 
-extern "C" const char* ExportableRectangle_toString(struct ExportableRectangle *object);
-const char* ExportableRectangle_toString(struct ExportableRectangle *object) {
-    string str = toString(*object);
+extern "C" const char* ExportableRectangle_toString(struct ExportableRectangle *ExportableRectangle);
+const char* ExportableRectangle_toString(struct ExportableRectangle *ExportableRectangle) {
+    string str = toString(*ExportableRectangle);
     const char* s = new char[str.length()];
     s = str.data();
     return s;
 }
 
-extern "C" const char* ObjectDetectionDescriptor_toString(struct ObjectDetectionDescriptor *object);
-const char* ObjectDetectionDescriptor_toString(struct ObjectDetectionDescriptor *object) {
-    string str = toString(*object);
+extern "C" const char* ObjectDetectionDescriptor_toString(struct ObjectDetectionDescriptor *ObjectDetectionDescriptor);
+const char* ObjectDetectionDescriptor_toString(struct ObjectDetectionDescriptor *ObjectDetectionDescriptor) {
+    string str = toString(*ObjectDetectionDescriptor);
     const char* s = new char[str.length()];
     s = str.data();
     return s;
 }
 
-extern "C" const char * PositionalFrameObjectDetectionDescriptor_toString(struct PositionalFrameObjectDetectionDescriptor* object);
-const char * PositionalFrameObjectDetectionDescriptor_toString(struct PositionalFrameObjectDetectionDescriptor* object) {
-    string str = toString(*object);
+extern "C" const char * PositionalFrameObjectDetectionDescriptor_toString(struct PositionalFrameObjectDetectionDescriptor* PositionalFrameObjectDetectionDescriptor);
+const char * PositionalFrameObjectDetectionDescriptor_toString(struct PositionalFrameObjectDetectionDescriptor* PositionalFrameObjectDetectionDescriptor) {
+    string str = toString(*PositionalFrameObjectDetectionDescriptor);
     const char* s = new char[str.length()];
     s = str.data();
     return s;
 }
 
 extern "C" int imageToMatrix(const char* imagePath, int option, struct ExportableMat *exMat);
-int imageToMatrix(const char* imagePath, int option, struct ExportableMat *exMat) {
-    return imageToMatrix(string(imagePath), option, *exMat);
+int imageToMatrix(const char* imagePath, int option, struct ExportableMat *ExportableMat) {
+    return imageToMatrix(string(imagePath), option, *ExportableMat);
 }
 
 extern "C" int runClassificationsOnImage(const char* classifierPath, const char* imagePath, struct PositionalFrameObjectDetectionDescriptor *pds);
-int runClassificationsOnImage(const char* classifierPath, const char* imagePath, struct PositionalFrameObjectDetectionDescriptor *pds) {
-    return runClassificationsOnImage(string(classifierPath), string(imagePath), *pds);
+int runClassificationsOnImage(const char* classifierPath, const char* imagePath, struct PositionalFrameObjectDetectionDescriptor *PositionalFrameObjectDetectionDescriptor) {
+    return runClassificationsOnImage(string(classifierPath), string(imagePath), *PositionalFrameObjectDetectionDescriptor);
 }
 
 extern "C" int processVideoFile(const char* classifierPath, const char* videoFilePath, struct ExportableRectanglesPerFrame* exportableResult);
-int processVideoFile(const char* classifierPath, const char* videoFilePath, struct ExportableRectanglesPerFrame* exportableResult) {
-    return processVideoFile(string(classifierPath), string(videoFilePath), *exportableResult);
+int processVideoFile(const char* classifierPath, const char* videoFilePath, struct ExportableRectanglesPerFrame* ExportableRectanglesPerFrame) {
+    return processVideoFile(string(classifierPath), string(videoFilePath), *ExportableRectanglesPerFrame);
 }
 
 extern "C" int runDetectionsOnVideo(const char* videoFilePath, const char* modelPath,
                                     const char* modelWeights, const char* cocoaClassesFilePath);
-int runDetectionsOnVideo(const char* videoFilePath, const char* modelPath, const char* modelWeights,
-                         const char* cocoaClassesFilePath) {
+int runDetectionsOnVideo(const char* videoFilePath, const char* modelPath,
+                         const char* modelWeights, const char* cocoaClassesFilePath) {
     return runDetectionsOnVideo(string(videoFilePath), string(modelPath),
                                 string(modelWeights), string(cocoaClassesFilePath));
 }
 
 extern "C" int runDetectionsOnImage(const char* imagePath, const char* modelPath,
                                     const char* modelWeights, const char* cocoaClassesFilePath,
-                                    struct PositionalFrameObjectDetectionDescriptor* pds,
+                                    struct PositionalFrameObjectDetectionDescriptor* PositionalFrameObjectDetectionDescriptor,
                                     double confidenceThreshold);
 int runDetectionsOnImage(const char* imagePath, const char* modelPath,
                          const char* modelWeights, const char* cocoaClassesFilePath,
-                         struct PositionalFrameObjectDetectionDescriptor* pds,
+                         struct PositionalFrameObjectDetectionDescriptor* PositionalFrameObjectDetectionDescriptor,
                          double confidenceThreshold) {
-    return runDetectionsOnImage(string(imagePath), string(modelPath), string(modelWeights), string(cocoaClassesFilePath),*pds, confidenceThreshold=confidenceThreshold);
+    return runDetectionsOnImage(string(imagePath), string(modelPath), string(modelWeights), string(cocoaClassesFilePath), *PositionalFrameObjectDetectionDescriptor, confidenceThreshold=confidenceThreshold);
 }
 
-extern "C" int drawDetectionsOnImage(const char* sourceImagePath, const char* finalImagePath, struct PositionalFrameObjectDetectionDescriptor *pds, double scale);
-int drawDetectionsOnImage(const char* sourceImagePath, const char* finalImagePath, struct PositionalFrameObjectDetectionDescriptor *pds, double scale) {
-    return drawDetectionsOnImage(string(sourceImagePath), string(finalImagePath), *pds, scale);
+extern "C" int drawDetectionsOnImage(const char* sourceImagePath, const char* finalImagePath, struct PositionalFrameObjectDetectionDescriptor *PositionalFrameObjectDetectionDescriptor, double scale);
+int drawDetectionsOnImage(const char* sourceImagePath, const char* finalImagePath, struct PositionalFrameObjectDetectionDescriptor *PositionalFrameObjectDetectionDescriptor, double scale) {
+    return drawDetectionsOnImage(string(sourceImagePath), string(finalImagePath), *PositionalFrameObjectDetectionDescriptor, scale);
 }

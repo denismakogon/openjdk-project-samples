@@ -59,21 +59,31 @@ enum ImwriteFlags {
      };
 // end
 
-const char* ExportableRectangle_toString(struct ExportableRectangle *object);
-const char* ObjectDetectionDescriptor_toString(struct ObjectDetectionDescriptor *object);
-const char * PositionalFrameObjectDetectionDescriptor_toString(struct PositionalFrameObjectDetectionDescriptor* object);
-int imageToMatrix(const char* imagePath, int option, struct ExportableMat *exMat);
-int runClassificationsOnImage(const char* classifierPath, const char* imagePath, struct PositionalFrameObjectDetectionDescriptor *pds);
-int processVideoFile(const char* classifierPath, const char* videoFilePath, struct ExportableRectanglesPerFrame* exportableResult);
+const char* ExportableRectangle_toString(struct ExportableRectangle *ExportableRectangle);
+
+const char* ObjectDetectionDescriptor_toString(struct ObjectDetectionDescriptor *ObjectDetectionDescriptor);
+
+const char * PositionalFrameObjectDetectionDescriptor_toString(struct PositionalFrameObjectDetectionDescriptor* PositionalFrameObjectDetectionDescriptor);
+
+int imageToMatrix(const char* imagePath, int option, struct ExportableMat *ExportableMat);
+
+int runClassificationsOnImage(const char* classifierPath, const char* imagePath,
+                              struct PositionalFrameObjectDetectionDescriptor *PositionalFrameObjectDetectionDescriptor);
+
+int processVideoFile(const char* classifierPath, const char* videoFilePath,
+                     struct ExportableRectanglesPerFrame* ExportableRectanglesPerFrame);
 
 int runDetectionsOnVideo(const char* videoFilePath, const char* modelPath,
-                                    const char* modelWeights, const char* cocoaClassesFilePath);
+                         const char* modelWeights, const char* cocoaClassesFilePath);
+
 int runDetectionsOnImage(const char* imagePath, const char* modelPath,
                          const char* modelWeights, const char* cocoaClassesFilePath,
-                         struct PositionalFrameObjectDetectionDescriptor* pds,
+                         struct PositionalFrameObjectDetectionDescriptor* PositionalFrameObjectDetectionDescriptor,
                          double confidenceThreshold);
 
-int drawDetectionsOnImage(const char* sourceImagePath, const char* finalImagePath, struct PositionalFrameObjectDetectionDescriptor *pds, double scale);
+int drawDetectionsOnImage(const char* sourceImagePath, const char* finalImagePath,
+                          struct PositionalFrameObjectDetectionDescriptor *PositionalFrameObjectDetectionDescriptor,
+                          double scale);
 
 #ifdef __cplusplus
 }
