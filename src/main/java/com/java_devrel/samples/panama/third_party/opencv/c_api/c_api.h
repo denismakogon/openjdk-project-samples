@@ -74,12 +74,15 @@ int processVideoFile(const char* classifierPath, const char* videoFilePath,
                      struct ExportableRectanglesPerFrame* ExportableRectanglesPerFrame);
 
 int runDetectionsOnVideo(const char* videoFilePath, const char* modelPath,
-                         const char* modelWeights, const char* cocoaClassesFilePath);
+                         const char* modelWeights, const char* cocoaClassesFilePath,
+                         double confidenceThresholdMin,
+                         double confidenceThresholdMax);
 
 int runDetectionsOnImage(const char* imagePath, const char* modelPath,
                          const char* modelWeights, const char* cocoaClassesFilePath,
                          struct PositionalFrameObjectDetectionDescriptor* PositionalFrameObjectDetectionDescriptor,
-                         double confidenceThreshold);
+                         double confidenceThresholdMin,
+                         double confidenceThresholdMax);
 
 int drawDetectionsOnImage(const char* sourceImagePath, const char* finalImagePath,
                           struct PositionalFrameObjectDetectionDescriptor *PositionalFrameObjectDetectionDescriptor,

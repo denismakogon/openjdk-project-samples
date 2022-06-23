@@ -28,15 +28,17 @@ public class Main {
             var cocoaClassesFilePath$ms = memorySession.allocateUtf8String(cocoaClassesFilePath);
 
             Stream.of(
-                    List.of(sourceImagePathOne, finalImagePathOne),
-                    List.of(sourceImagePathTwo, finalImagePathTwo)
+                    List.of(sourceImagePathOne, finalImagePathOne, 0.0, 0.8),
+                    List.of(sourceImagePathTwo, finalImagePathTwo, 0.2, 0.8)
             ).forEach(lst -> {
-                var source = memorySession.allocateUtf8String(lst.get(0));
-                var target = memorySession.allocateUtf8String(lst.get(1));
+                var source = memorySession.allocateUtf8String((String)lst.get(0));
+                var target = memorySession.allocateUtf8String((String)lst.get(1));
                 int retCode;
                 var pds$ms = PositionalFrameObjectDetectionDescriptor.allocate(memorySession);
+
                 retCode = c_api_h.runDetectionsOnImage(
-                        source, modelPath$ms, modelWeightsPath$ms, cocoaClassesFilePath$ms, pds$ms, 0.1
+                        source, modelPath$ms, modelWeightsPath$ms,
+                        cocoaClassesFilePath$ms, pds$ms, (Double)lst.get(2), (Double)lst.get(3)
                 );
                 if (retCode != 0 ) {
                     System.exit(retCode);

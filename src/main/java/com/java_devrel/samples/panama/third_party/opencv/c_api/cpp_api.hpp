@@ -22,12 +22,15 @@ int runClassificationsOnImage(string classifierPath, string imagePath,
 int processVideoFile(string classifierPath, string videoFilePath,
                      ExportableRectanglesPerFrame& exportableResult);
 
-int runDetectionsOnVideo(string videoFilePath, string modelPath, string modelWeights);
+int runDetectionsOnVideo(string videoFilePath, string modelPath, string modelWeights,
+                         double confidenceThresholdMax=1.0,
+                         double confidenceThresholdMin=0.1);
 
 int runDetectionsOnImage(string imagePath, string modelPath, string modelWeights,
                          string cocoaClassesFilePath,
                          PositionalFrameObjectDetectionDescriptor& pds,
-                         double confidenceThreshold=0.4);
+                         double confidenceThresholdMax=1.0,
+                         double confidenceThresholdMin=0.1);
 
 string toString(PositionalFrameObjectDetectionDescriptor& object);
 
