@@ -65,10 +65,14 @@ const char * PositionalFrameObjectDetectionDescriptor_toString(struct Positional
 int imageToMatrix(const char* imagePath, int option, struct ExportableMat *exMat);
 int runClassificationsOnImage(const char* classifierPath, const char* imagePath, struct PositionalFrameObjectDetectionDescriptor *pds);
 int processVideoFile(const char* classifierPath, const char* videoFilePath, struct ExportableRectanglesPerFrame* exportableResult);
-int runDetectionsOnImage(const char* imagePath, const char* modelPath, const char* modelWeights,
+
+int runDetectionsOnVideo(const char* videoFilePath, const char* modelPath,
+                                    const char* modelWeights, const char* cocoaClassesFilePath);
+int runDetectionsOnImage(const char* imagePath, const char* modelPath,
+                         const char* modelWeights, const char* cocoaClassesFilePath,
                          struct PositionalFrameObjectDetectionDescriptor* pds,
                          double confidenceThreshold);
-int runDetectionsOnVideo(const char* videoFilePath, const char* modelPath, const char* modelWeights);
+
 int drawDetectionsOnImage(const char* sourceImagePath, const char* finalImagePath, struct PositionalFrameObjectDetectionDescriptor *pds, double scale);
 
 #ifdef __cplusplus

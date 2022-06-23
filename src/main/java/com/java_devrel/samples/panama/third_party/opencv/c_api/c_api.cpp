@@ -20,6 +20,9 @@
 
 #include <iostream>
 #include <cstdio>
+#include <iterator>
+#include <fstream>
+
 
 using namespace std;
 using namespace cv;
@@ -42,6 +45,21 @@ const static Scalar colors[] = {
     Scalar(0,0,255),
     Scalar(255,0,255)
 };
+
+/*-----------------------------------------------------------------------*/
+/*-----------------------------------etc---------------------------------*/
+/*-----------------------------------------------------------------------*/
+
+bool checkElementByIndexAt(vector<string>& vt, int index) {
+    bool isPresent;
+    try {
+        vt.at(index);
+        isPresent = true;
+    } catch (out_of_range& ex) {
+        isPresent = false;
+    }
+    return isPresent;
+}
 
 /*-----------------------------------------------------------------------*/
 /*---------------------------------DEBUG---------------------------------*/
@@ -79,7 +97,58 @@ string toString(PositionalFrameObjectDetectionDescriptor& object) {
 }
 
 /*-----------------------------------------------------------------------*/
-/*----------------------------------etc----------------------------------*/
+/*-------------------------------file API--------------------------------*/
+/*-----------------------------------------------------------------------*/
+
+int iterateFile(string filePath, function<void (const string&, int )> callback) {
+    debug("in iterateFile");
+    try {
+        findFile(filePath);
+    } catch (Exception& ex) {
+        debug(ex.what());
+        return -1;
+    }
+    
+    ifstream inputFile(filePath.c_str());
+    
+    string tmp;
+    int indexOf = 0;
+    while (std::getline(inputFile, tmp)) {
+        if (tmp.size() > 0) {
+            callback(tmp, indexOf);
+            indexOf++;
+        }
+    }
+    
+    inputFile.close();
+    debug("done with iterateFile");
+    return 0;
+}
+
+int readFileToVectorOf(string filePath, vector<string>& lines) {
+    debug("in readFileToVectorOf");
+    
+    int retCode = iterateFile(filePath, [&](const string & line, int indexOf) {
+        lines.push_back(line);
+    });
+    
+    debug(format("done with readFileToVectorOf, retCode: %d", retCode));
+    return retCode;
+}
+
+int readFileToMapOf(string filePath, map<string, int>& mapOf) {
+    debug("in readFileToMapOf");
+    
+    int retCode = iterateFile(filePath, [&](const string& line, int indexOf) {
+        mapOf[line] = indexOf;
+    });
+    
+    debug(format("done with readFileToMapOf, retCode: %d", retCode));
+    return retCode;
+}
+
+/*-----------------------------------------------------------------------*/
+/*---------------------------vector export API---------------------------*/
 /*-----------------------------------------------------------------------*/
 
 void exportVectorOf(vector<Rect>& detections, ExportableRectangle* result) {
@@ -356,7 +425,10 @@ void inputPreprocess(const Mat& frame, Net& net, Size inpSize, float scale,
     debug("done with inputPreprocess");
 }
 
-void formatDetections(Mat& frame, vector<Mat>& outs, Net& net, vector<ObjectDetectionDescriptor>& ds, float confidenceThreshold=0.4, int backend=DNN_BACKEND_DEFAULT) {
+void formatDetections(Mat& frame, vector<Mat>& outs, Net& net, vector<ObjectDetectionDescriptor>& ds,
+                      vector<string>& cocoaClasses,
+                      float confidenceThreshold=0.4,
+                      int backend=DNN_BACKEND_DEFAULT) {
     debug("in formatDetections");
     static std::vector<int> outLayers = net.getUnconnectedOutLayers();
     static std::string outLayerType = net.getLayer(outLayers[0])->type;
@@ -369,7 +441,10 @@ void formatDetections(Mat& frame, vector<Mat>& outs, Net& net, vector<ObjectDete
             double confidence;
             minMaxLoc(scores, 0, &confidence, 0, &classIdPoint);
             
-            if (confidence > confidenceThreshold) {
+            bool ifMatch = (confidence > confidenceThreshold) &&
+                            checkElementByIndexAt(cocoaClasses, classIdPoint.x);
+            
+            if (ifMatch) {
                 int centerX = (int)(data[0] * frame.cols);
                 int centerY = (int)(data[1] * frame.rows);
                 int width = (int)(data[2] * frame.cols);
@@ -395,14 +470,17 @@ void formatDetections(Mat& frame, vector<Mat>& outs, Net& net, vector<ObjectDete
     debug("done with formatDetections");
 }
 
-void runtObjectDetectionsOn(Mat& img, Net& net, vector<ObjectDetectionDescriptor>& ds, double confidenceThreshold=0.4) {
+void runtObjectDetectionsOn(Mat& img, Net& net, vector<ObjectDetectionDescriptor>& ds,
+                            vector<string>& cocoaClasses,
+                            double confidenceThreshold=0.4) {
     debug("in runtObjectDetectionsOn");
     int inputSize = 320;
     vector<Mat> outputs;
 
     inputPreprocess(img, net, Size(inputSize, inputSize), (float) 1/255, Scalar(0, 0, 0), false);
     net.forward(outputs, net.getUnconnectedOutLayersNames());
-    formatDetections(img, outputs, net, ds, confidenceThreshold=confidenceThreshold);
+    
+    formatDetections(img, outputs, net, ds, cocoaClasses, confidenceThreshold=confidenceThreshold);
     debug("done with runtObjectDetectionsOn");
 }
 
@@ -410,7 +488,7 @@ void runtObjectDetectionsOn(Mat& img, Net& net, vector<ObjectDetectionDescriptor
 /*---------------------------DNN detections API--------------------------*/
 /*-----------------------------------------------------------------------*/
 
-int runDetectionsOn(string imagePath, string modelPath, string modelWeights, PositionalFrameObjectDetectionDescriptor& pds, double confidenceThreshold=0.4) {
+int runDetectionsOn(string imagePath, string modelPath, string modelWeights, string cocoaClassesFilePath, PositionalFrameObjectDetectionDescriptor& pds, double confidenceThreshold=0.4) {
     debug("in runDetectionsOn");
     dnn::Net net;
     Mat frame;
@@ -427,7 +505,13 @@ int runDetectionsOn(string imagePath, string modelPath, string modelWeights, Pos
         return retCode;
     }
     
-    runtObjectDetectionsOn(frame, net, ds, confidenceThreshold=confidenceThreshold);
+    vector<string> cocoaClasses;
+    retCode = readFileToVectorOf(cocoaClassesFilePath, cocoaClasses);
+    if ( retCode != 0 ) {
+        return retCode;
+    }
+    
+    runtObjectDetectionsOn(frame, net, ds, cocoaClasses, confidenceThreshold=confidenceThreshold);
 
     sort(
          ds.begin(), ds.end(),
@@ -445,11 +529,13 @@ int runDetectionsOn(string imagePath, string modelPath, string modelWeights, Pos
     return retCode;
 }
 
-int runDetectionsOnVideo(string videoFilePath, string modelPath, string modelWeights) {
+int runDetectionsOnVideo(string videoFilePath, string modelPath, string modelWeights,
+                         string cocoaClassesFilePath) {
     debug("in runDetectionsOnVideo");
     dnn::Net net;
     vector<Mat> frames;
     vector<PositionalFrameObjectDetectionDescriptor> detectionsPerFrame;
+    vector<string> cocoaClasses;
 
     int retCode = 0;
     retCode = readAllFrames(videoFilePath, frames);
@@ -461,9 +547,14 @@ int runDetectionsOnVideo(string videoFilePath, string modelPath, string modelWei
         return retCode;
     }
     
+    retCode = readFileToVectorOf(cocoaClassesFilePath, cocoaClasses);
+    if ( retCode != 0 ) {
+        return retCode;
+    }
+    
     for (long i = 0; i < frames.size(); i++ ) {
         vector<ObjectDetectionDescriptor> ds;
-        runtObjectDetectionsOn(frames[i], net, ds);
+        runtObjectDetectionsOn(frames[i], net, ds, cocoaClasses);
         detectionsPerFrame[i] = (PositionalFrameObjectDetectionDescriptor) {
             .position = static_cast<int>(i),
             .size = ds.size(),
@@ -475,10 +566,11 @@ int runDetectionsOnVideo(string videoFilePath, string modelPath, string modelWei
 }
 
 int runDetectionsOnImage(string imagePath, string modelPath, string modelWeights,
+                         string cocoaClassesFilePath,
                          PositionalFrameObjectDetectionDescriptor& pds,
                          double confidenceThreshold=0.4) {
-    return runDetectionsOn(imagePath, modelPath, modelWeights, pds,
-                           confidenceThreshold=confidenceThreshold);
+    return runDetectionsOn(imagePath, modelPath, modelWeights, cocoaClassesFilePath,
+                           pds, confidenceThreshold=confidenceThreshold);
 }
 
 /*-----------------------------------------------------------------------*/
@@ -555,16 +647,23 @@ int processVideoFile(const char* classifierPath, const char* videoFilePath, stru
     return processVideoFile(string(classifierPath), string(videoFilePath), *exportableResult);
 }
 
-extern "C" int runDetectionsOnVideo(const char* videoFilePath, const char* modelPath, const char* modelWeights);
-int runDetectionsOnVideo(const char* videoFilePath, const char* modelPath, const char* modelWeights) {
-    return runDetectionsOnVideo(string(videoFilePath), string(modelPath), string(modelWeights));
+extern "C" int runDetectionsOnVideo(const char* videoFilePath, const char* modelPath,
+                                    const char* modelWeights, const char* cocoaClassesFilePath);
+int runDetectionsOnVideo(const char* videoFilePath, const char* modelPath, const char* modelWeights,
+                         const char* cocoaClassesFilePath) {
+    return runDetectionsOnVideo(string(videoFilePath), string(modelPath),
+                                string(modelWeights), string(cocoaClassesFilePath));
 }
 
-extern "C" int runDetectionsOnImage(const char* imagePath, const char* modelPath, const char* modelWeights,
-                                     struct PositionalFrameObjectDetectionDescriptor* pds, double confidenceThreshold);
-int runDetectionsOnImage(const char* imagePath, const char* modelPath, const char* modelWeights,
-                          struct PositionalFrameObjectDetectionDescriptor* pds, double confidenceThreshold) {
-    return runDetectionsOnImage(string(imagePath), string(modelPath), string(modelWeights), *pds, confidenceThreshold=confidenceThreshold);
+extern "C" int runDetectionsOnImage(const char* imagePath, const char* modelPath,
+                                    const char* modelWeights, const char* cocoaClassesFilePath,
+                                    struct PositionalFrameObjectDetectionDescriptor* pds,
+                                    double confidenceThreshold);
+int runDetectionsOnImage(const char* imagePath, const char* modelPath,
+                         const char* modelWeights, const char* cocoaClassesFilePath,
+                         struct PositionalFrameObjectDetectionDescriptor* pds,
+                         double confidenceThreshold) {
+    return runDetectionsOnImage(string(imagePath), string(modelPath), string(modelWeights), string(cocoaClassesFilePath),*pds, confidenceThreshold=confidenceThreshold);
 }
 
 extern "C" int drawDetectionsOnImage(const char* sourceImagePath, const char* finalImagePath, struct PositionalFrameObjectDetectionDescriptor *pds, double scale);

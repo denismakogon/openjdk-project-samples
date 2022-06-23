@@ -59,11 +59,14 @@ public class Main {
         var carClassifier = baseDir + "car_classfier.xml";
         var modelPath = baseDir + "yolov3-320.cfg";
         var modelWeightsPath = baseDir + "yolov3-320.weights";
+        var cocoaClassesFilePath = baseDir + "coco.names";
 
         try(var memorySession = MemorySession.openConfined()) {
             var carClassifier$ms = memorySession.allocateUtf8String(carClassifier);
             var modelPath$ms = memorySession.allocateUtf8String(modelPath);
             var modelWeightsPath$ms = memorySession.allocateUtf8String(modelWeightsPath);
+            var cocoaClassesFilePath$ms = memorySession.allocateUtf8String(cocoaClassesFilePath);
+
             Stream.of(
                     List.of(sourceImagePathOne, finalImagePathOne),
                     List.of(sourceImagePathTwo, finalImagePathTwo)
@@ -73,7 +76,7 @@ public class Main {
                 int retCode;
                 var pds$ms = PositionalFrameObjectDetectionDescriptor.allocate(memorySession);
                 retCode = c_api_h.runDetectionsOnImage(
-                        source, modelPath$ms, modelWeightsPath$ms, pds$ms, 0.2
+                        source, modelPath$ms, modelWeightsPath$ms, cocoaClassesFilePath$ms, pds$ms, 0.2
                 );
                 if (retCode != 0 ) {
                     System.exit(retCode);
