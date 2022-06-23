@@ -36,14 +36,14 @@ public class Main {
                 int retCode;
                 var pds$ms = PositionalFrameObjectDetectionDescriptor.allocate(memorySession);
                 retCode = c_api_h.runDetectionsOnImage(
-                        source, modelPath$ms, modelWeightsPath$ms, cocoaClassesFilePath$ms, pds$ms, 0.2
+                        source, modelPath$ms, modelWeightsPath$ms, cocoaClassesFilePath$ms, pds$ms, 0.1
                 );
                 if (retCode != 0 ) {
                     System.exit(retCode);
                 }
 
                 System.out.println(c_api_h.PositionalFrameObjectDetectionDescriptor_toString(pds$ms).getUtf8String(0));
-                c_api_h.drawDetectionsOnImage(source, target, pds$ms, 1.2);
+                c_api_h.drawDetectionsOnImage(source, target, pds$ms, 1);
             });
         }
     }
