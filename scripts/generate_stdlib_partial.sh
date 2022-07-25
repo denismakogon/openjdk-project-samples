@@ -14,7 +14,7 @@ if [[ ! -d ${package_dir} ]]; then
   if [[ $OSTYPE == 'darwin'* ]]; then
     include_path="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include"
   fi
-  jextract --source -t "${package}" -I ${include_path} "${include_path}/${stdlib_partial}.h" --output src/main/java
+  jextract --source -t "${package}" -I ${include_path} --output src/main/java "${include_path}/${stdlib_partial}.h"
 else
   echo "package ${package} already exists!"
 fi

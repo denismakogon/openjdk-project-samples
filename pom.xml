@@ -14,6 +14,14 @@
         <maven.compiler.target>19</maven.compiler.target>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.beust</groupId>
+            <artifactId>jcommander</artifactId>
+            <version>1.82</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -139,6 +147,17 @@
                             <commandlineArgs>scripts/generate_ffmpeg_partially.sh</commandlineArgs>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>jextract-opecv-c-api</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>/bin/bash</executable>
+                            <commandlineArgs>scripts/generate_opencv_c_api.sh</commandlineArgs>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -149,16 +168,10 @@
                     <target>${maven.compiler.target}</target>
                     <includes>
                         <!--Panama examples-->
-                        <include>**/panama/part_1/*.java</include>
-                        <include>**/panama/part_2/*.java</include>
-                        <include>**/panama/part_3/*.java</include>
-                        <include>**/panama/part_4/*.java</include>
+                        <include>**/panama/part*/*.java</include>
                         <!--Generated sources-->
-                        <include>**/stdlib/dirent/*.java</include>
-                        <include>**/stdlib/grp/*.java</include>
-                        <include>**/stdlib/pwd/*.java</include>
-                        <include>**/stdlib/stdio/*.java</include>
-                        <include>**/stdlib/string/*.java</include>
+                        <include>**/stdlib/*/*.java</include>
+                        <include>**/opencv/*.java</include>
                     </includes>
                     <compilerArgs>
                         <arg>--enable-preview</arg>
