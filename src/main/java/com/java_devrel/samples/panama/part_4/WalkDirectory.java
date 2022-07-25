@@ -8,14 +8,11 @@ import java.io.IOException;
 import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;
-import java.lang.foreign.SegmentAllocator;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 
 public class WalkDirectory {
-
-    private static SegmentAllocator allocator;
 
     private static void listDirsJavaStyle(String dirName) throws IOException {
         try(var filesStream = Files.walk(Path.of(dirName))) {
@@ -25,7 +22,7 @@ public class WalkDirectory {
 
     private static void listDirsCStyle(String dirName, int indent, MemorySession scope) throws IOException {
         // const char *name
-        var dirNameSegment = allocator.allocateUtf8String(dirName);
+        var dirNameSegment = scope.allocateUtf8String(dirName);
         // DIR *dir;
         var dirStructPointerAddress = dirent_h.opendir(dirNameSegment);
         // if (!(dir = opendir(name)))
@@ -48,8 +45,8 @@ public class WalkDirectory {
             var nameStr = nameMemorySegment.getUtf8String(0);
             // if (entry->d_type == DT_DIR)
             if (entryType == dirent_h.DT_DIR()) {
-                var isCurrentDir = string_h.strcmp(nameMemorySegment, allocator.allocateUtf8String(".")) == 0;
-                var isParentDir = string_h.strcmp(nameMemorySegment, allocator.allocateUtf8String("..")) == 0;
+                var isCurrentDir = string_h.strcmp(nameMemorySegment, scope.allocateUtf8String(".")) == 0;
+                var isParentDir = string_h.strcmp(nameMemorySegment, scope.allocateUtf8String("..")) == 0;
                 // if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
                 if (isCurrentDir || isParentDir) {
                     continue;
@@ -68,7 +65,6 @@ public class WalkDirectory {
     public static void main(String[] args) throws IOException {
         var dirName = args[0];
         try(var scope = MemorySession.openConfined()) {
-            allocator = SegmentAllocator.newNativeArena(scope);
             listDirsCStyle(dirName, 0, scope);
         }
     }

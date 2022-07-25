@@ -51,14 +51,10 @@ java --enable-native-access=ALL-UNNAMED --enable-preview -cp target/openjdk-samp
 
 ### OpenJDK Panama Part 5
 
+Please see [https://github.com/denismakogon/cpp-to-c-api](https://github.com/denismakogon/cpp-to-c-api) before running the application.
+
 ```shell
-java -Djava.library.path="${PWD}:/usr/local/lib" \
-  --enable-native-access=ALL-UNNAMED \
-  --enable-preview -cp target/openjdk-samples-1.0.jar \
-  com.java_devrel.samples.panama.part_5.Main
-  
-  
-java --enable-native-access=ALL-UNNAMED \
+DEBUG=1 java --enable-native-access=ALL-UNNAMED \
   --enable-preview -cp target/openjdk-samples-1.0.jar \
   com.java_devrel.samples.panama.part_5.Main
 ```
