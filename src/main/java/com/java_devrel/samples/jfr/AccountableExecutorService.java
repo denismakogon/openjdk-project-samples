@@ -28,7 +28,7 @@ public class AccountableExecutorService implements ExecutorService {
     }
 
     Thread backgroundEventPublisherTask() {
-        return Thread.ofPlatform().unstarted(() -> {
+        return eventManager.eventEnabled() ? Thread.ofPlatform().unstarted(() -> {
             while (true) {
                 try {
                     Thread.sleep(Duration.ofSeconds(1));
@@ -37,7 +37,7 @@ public class AccountableExecutorService implements ExecutorService {
                     return;
                 }
             }
-        });
+        }) : null;
     }
 
     AccountableExecutorService(ExecutorService service, ThreadPoolEventManager eventManager) {
@@ -169,7 +169,9 @@ public class AccountableExecutorService implements ExecutorService {
 
     @Override
     public void close() {
-        this.backgroundEventPublisher.interrupt();
+        if (this.backgroundEventPublisher != null) {
+            this.backgroundEventPublisher.interrupt();
+        }
         this.service.close();
         counter = new AtomicInteger(0);
     }
