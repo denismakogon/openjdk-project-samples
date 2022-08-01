@@ -1,0 +1,1 @@
+-XX:StartFlightRecording=disk=true,maxsize=10g,maxage=24h,filename=./recording.jfr -XX:FlightRecorderOptions=repository=./diagnostics/,maxchunksize=50m,stackdepth=1024
