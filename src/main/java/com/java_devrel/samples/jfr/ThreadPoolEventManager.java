@@ -1,5 +1,8 @@
 package com.java_devrel.samples.jfr;
 
+import java.time.Duration;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class ThreadPoolEventManager {
 
     ThreadPoolStatusEvent event;
@@ -7,6 +10,10 @@ public class ThreadPoolEventManager {
     public ThreadPoolEventManager(int threadPoolSize) {
         event = new ThreadPoolStatusEvent();
         event.total = threadPoolSize > 0 ? threadPoolSize : -1;
+    }
+
+    public boolean eventEnabled() {
+        return event.isEnabled();
     }
 
     public void record(int busyThreads) {
