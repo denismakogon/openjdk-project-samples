@@ -16,10 +16,8 @@ public class HttpServerOnLoom {
     );
 
     public static void main(String[] args) throws IOException {
-        try(executor) {
-            var server = Server.serverWithExecutor(executor, Server.defaultRouter());
-            server.start();
-        }
+        var server = Server.serverWithExecutor(executor, Server.defaultRouter());
+        server.start();
     }
 
 }

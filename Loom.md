@@ -48,6 +48,7 @@ Samples:
  - unboundForkInScope
  - syncStreamInScope
  - parallelStreamInScope
+ - boundStream
 
 ```shell
 java --add-modules jdk.incubator.concurrent --add-opens=java.base/jdk.internal.vm=ALL-UNNAMED --enable-preview -cp target/openjdk-samples-1.0.jar -Dsample=goodThreadScope com.java_devrel.samples.loom.StructuredConcurrency

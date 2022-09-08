@@ -1,8 +1,5 @@
 package com.java_devrel.samples.jfr;
 
-import java.time.Duration;
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class ThreadPoolEventManager {
 
     ThreadPoolStatusEvent event;

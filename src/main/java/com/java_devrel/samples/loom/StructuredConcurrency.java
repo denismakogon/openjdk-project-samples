@@ -2,6 +2,7 @@ package com.java_devrel.samples.loom;
 
 import jdk.incubator.concurrent.StructuredTaskScope;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.Optional;
@@ -16,13 +17,13 @@ public class StructuredConcurrency extends Util {
     static int taskNo = 10;
     static Callable<Integer> task = () -> {
         System.out.println(Thread.currentThread());
-//        Thread.sleep(Duration.ofSeconds(1));
+        Thread.sleep(Duration.ofSeconds(1));
         updatePlatformOrVirtualThreadMap();
-        return null;
+        return 42;
     };
 
     static void simpleScope() throws InterruptedException {
-        try(var scope = new StructuredTaskScope<>()) {
+        try (var scope = new StructuredTaskScope<>()) {
             scope.fork(task);
             scope.join();
         }
@@ -76,6 +77,15 @@ public class StructuredConcurrency extends Util {
             scopeJoinUntil.joinUntil(Instant.now().plusSeconds(taskNo));
         } catch (WrongThreadException | TimeoutException | InterruptedException e) {
             System.err.println(e.getMessage());
+        }
+    }
+
+    static void boundStream() throws InterruptedException {
+        try(var scope = new StructuredTaskScope<Integer>()) {
+            for (Callable<Integer> integerCallable : Collections.nCopies(100, task)) {
+                scope.fork(integerCallable);
+            }
+            scope.join();
         }
     }
 

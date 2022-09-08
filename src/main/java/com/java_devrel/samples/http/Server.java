@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -117,7 +116,7 @@ public class Server {
                             handle_root(httpExchange);
                         }
                     }
-                    case "/get" -> {
+                    case "/get", "/post" -> {
                         if (validateHTTPMethod(httpExchange, List.of("GET", "POST"))) {
                             handle_get(httpExchange);
                         }
@@ -168,7 +167,8 @@ public class Server {
 
     private static Map<String, List<String>> queryToMap(URI url) {
         logger.info("in query params method");
-        return Arrays.stream(url.getQuery().split("&")).parallel()
+        var queryString = url.getQuery() != null ? url.getQuery() : "";
+        return Arrays.stream(queryString.split("&")).parallel()
                 .map(keyValue -> {
                     var pair = keyValue.split("=");
                     String key = null;
