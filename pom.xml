@@ -169,6 +169,7 @@
                     <includes>
                         <!--Panama examples-->
                         <include>**/panama/part*/*.java</include>
+                        <include>**/panama/vectors*/*.java</include>
                         <!--Generated sources-->
                         <include>**/stdlib/*/*.java</include>
                         <include>**/opencv/*.java</include>
