@@ -39,3 +39,7 @@ META-INF
 *final.jpeg*
 assets/video*
 *.jfr
+.vscode/
+vector_simd
+*.out
+*.platform

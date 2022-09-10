@@ -13,10 +13,6 @@ public class Printf {
     public static void main(String[] args) {
         var bytes = "Welcome from the other side!\n".getBytes(StandardCharsets.UTF_8);
         try (var memorySession = MemorySession.openConfined()) {
-<<<<<<< Updated upstream
-            var cString = memorySession.allocateUtf8String("Welcome from the other side!\n");
-            printf(cString);
-=======
             var segmentAllocator = SegmentAllocator.newNativeArena(
                     bytes.length + 1, memorySession);
             MemorySegment addr = segmentAllocator.allocate(bytes.length + 1);
@@ -24,7 +20,6 @@ public class Printf {
             addr.copyFrom(heapSegment);
             addr.set(JAVA_BYTE, bytes.length, (byte)0);
             printf(addr);
->>>>>>> Stashed changes
         }
     }
 }
